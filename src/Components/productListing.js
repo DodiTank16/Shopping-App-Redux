@@ -9,18 +9,20 @@ import Breadcrumb from "../Redux/reducer/Constants/Breadcrumb";
 const ProductListing = () => {
 	const products = useSelector((state) => state.allProducts.products);
 	const [isLoading, setIsLoading] = useState(true);
+	const [response, setResponse] = useState();
 
 	// console.log(products);
 
 	const dispatch = useDispatch();
 	const fetchProducts = async () => {
 		await axios
-			.get("https://fakestoreapi.com/products")
+			.get("http://localhost:3001/products")
 			.then((response) => {
 				setTimeout(() => {
 					setIsLoading(false);
-				}, 2000);
+				}, 1000);
 				dispatch(setProducts(response.data));
+				setResponse(response.data)
 			})
 			.catch((err) => {
 				console.log("Error", err);
@@ -55,7 +57,7 @@ const ProductListing = () => {
 					</svg>
 				</div>
 			)}
-			{!isLoading && <Product />}
+			{!isLoading && <Product data={response} />}
 		</div>
 	);
 };

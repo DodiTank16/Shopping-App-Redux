@@ -3,7 +3,7 @@ import { useLocation, Link } from 'react-router-dom'
 
 const Breadcrumb = () => {
 	const location = useLocation()
-	const path = location.pathname.split(/[/]/);
+	// const path = location.pathname.split(/[/]/);
 	// console.log("location", path)
 
 	const breadCrumbView = () => {
@@ -29,10 +29,10 @@ const Breadcrumb = () => {
 						const routeTo = `/${pathnames.slice(1, index + 1).join("/")}`;
 						const isLast = index === pathnames.length - 1;
 						return isLast ? (
-							<ol className="inline-flex items-center space-x-1 md:space-x-3"> &gt;
+							<ol className="inline-flex items-center space-x-1 md:space-x-3" key={index}> &gt;
 								<li className="inline-flex items-center">{capatilize(name)}</li></ol>
 						) : (
-							<ol className="inline-flex items-center space-x-1 md:space-x-3">
+							<ol className="inline-flex items-center space-x-1 md:space-x-3">&gt;
 								<li className="inline-flex items-center">
 									<Link to={`${routeTo}`}>{capatilize(name)}</Link>
 								</li></ol>

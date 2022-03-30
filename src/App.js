@@ -14,12 +14,10 @@ function App() {
 				<Route path="/" element={<Login />} />
 				<Route path="/HomePage" element={<HomePage />} />
 				<Route path="/ProductListing" element={<ProductListing />} />
-				<Route path="/ProductDetails/:id" element={<ProductDetails />} />
+				<Route path="/ProductListing/ProductDetails/:id" element={<ProductDetails />} />
 				<Route path="/Cart" element={<Cart />} />
 				<Route path="/AboutUs" element={<AboutUs />} />
 				<Route path="/ContactUs" element={<ContactUs />} />
-				{/* <Route path="/ListVendor" element={<ListVendor />} /> */}
-				{/* <Route path="/UpdateVendor/:id" element={<AddVendor />} /> */}
 			</Routes>
 		</Router>
 	);

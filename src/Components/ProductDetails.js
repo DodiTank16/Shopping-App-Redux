@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 import Header from "../Redux/reducer/Constants/Header";
-import { setProducts } from "../Redux/actions/productActions";
+import { addCart, setProducts } from "../Redux/actions/productActions";
 import Breadcrumb from "../Redux/reducer/Constants/Breadcrumb";
 
 const ProductDetails = () => {
@@ -20,13 +20,18 @@ const ProductDetails = () => {
 
 	const fetchProducts = async () => {
 		const response = await axios
-			.get(`https://fakestoreapi.com/products/${state}`)
+			.get(`http://localhost:3001/products/${state}`)
 			.catch((error) => console.log("Error : ", error));
 
 		dispatch(setProducts(response.data));
 		setSelectedItem(response.data);
 		setProductRate(response.data.rating.rate);
 	};
+
+	const addToCart = (product) => {
+		dispatch(addCart(product));
+	};
+
 	return (
 		<>
 			<Header />
@@ -55,20 +60,22 @@ const ProductDetails = () => {
 							</p>
 						</div>
 						<div>
-							<div className="text-sm flex items-center">
-								<p className="text-gray-900 leading-none">
+							<div className="text-sm flex items-center mb-3">
+								<p className="text-gray-900 leading-none" style={{ fontWeight: "600", color: "rgba(191, 34, 34, 1)", fontSize: 30 }}>
 									<b>Price : </b>
 								</p>
-								<p className="text-gray-600">{price}$</p>
+								<p className="text-gray-600" style={{ fontWeight: "600", color: "rgba(191, 34, 34, 1)", fontSize: 30 }}>{price}$</p>
 							</div>
-							<div className="text-sm flex items-center">
-								<p className="text-gray-900 leading-none ">
+							<div className="text-sm flex items-center" >
+								<p className="text-gray-900 leading-none" style={{ fontWeight: "600", color: "black", fontSize: 20 }}>
 									<b>Rating : </b>
 								</p>
-								<p className="text-gray-600">{productRate}/5</p>
+								<p className="text-gray-600" style={{ fontWeight: "600", color: "black", fontSize: 20 }}>{productRate}/5</p>
 							</div>
 						</div>
-						<button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add to Cart</button>
+						<button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+							onClick={() => addToCart(products)}
+						>Add to Cart</button>
 					</div>
 				</div>
 			</div>
