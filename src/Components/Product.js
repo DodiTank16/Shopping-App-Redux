@@ -11,6 +11,13 @@ const Product = () => {
 	const [flag, setFlag] = React.useState();
 	const [data, setData] = React.useState([]);
 	const navigate = useNavigate();
+	const token = localStorage.getItem("LoginToken");
+
+	useEffect(() => {
+
+		if (!token) navigate("/");
+		document.title = "HomePage";
+	}, []);
 
 	useEffect(() => {
 		setData(productData)

@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../Redux/reducer/Constants/Header";
 import { addCart, setProducts } from "../Redux/actions/productActions";
 import Breadcrumb from "../Redux/reducer/Constants/Breadcrumb";
@@ -9,10 +9,18 @@ import Breadcrumb from "../Redux/reducer/Constants/Breadcrumb";
 const ProductDetails = () => {
 	const products = useSelector((state) => state.allProducts.products);
 	const [selectedItem, setSelectedItem] = useState("");
-	const [productRate, setProductRate] = useState();
 	const { title, description, price, category, image } = selectedItem;
+	const [productRate, setProductRate] = useState();
+	const token = localStorage.getItem("LoginToken");
 	const { state } = useLocation();
+	const navigate = useNavigate();
 	const dispatch = useDispatch();
+
+
+	useEffect(() => {
+		if (!token) navigate("/");
+		document.title = "HomePage";
+	}, [navigate, token]);
 
 	useEffect(() => {
 		state && fetchProducts();

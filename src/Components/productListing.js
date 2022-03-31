@@ -5,15 +5,22 @@ import { setProducts } from "../Redux/actions/productActions";
 import Product from "./Product";
 import Header from "../Redux/reducer/Constants/Header";
 import Breadcrumb from "../Redux/reducer/Constants/Breadcrumb";
+import { useNavigate } from "react-router-dom";
 
 const ProductListing = () => {
 	const products = useSelector((state) => state.allProducts.products);
 	const [isLoading, setIsLoading] = useState(true);
 	const [response, setResponse] = useState();
-
-	// console.log(products);
-
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const token = localStorage.getItem("LoginToken");
+
+	useEffect(() => {
+
+		if (!token) navigate("/");
+		document.title = "HomePage";
+	}, []);
+
 	const fetchProducts = async () => {
 		await axios
 			.get("http://localhost:3001/products")

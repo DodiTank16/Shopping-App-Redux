@@ -8,18 +8,12 @@ import Breadcrumb from "../Redux/reducer/Constants/Breadcrumb";
 import { useSelector } from "react-redux";
 
 export default function HomePage() {
-
-	const products = useSelector((state) => state.allProducts.products);
-
 	const navigate = useNavigate();
 	const location = useLocation();
 	const token = localStorage.getItem("LoginToken");
-	const id = 7;
 
 	useEffect(() => {
-
 		if (!token) navigate("/");
-		// console.log(token);
 		document.title = "HomePage";
 	}, []);
 
@@ -28,7 +22,6 @@ export default function HomePage() {
 			empNo: location.state,
 			token: token,
 		};
-		// console.log(location.state, token);
 
 		axiosInstance
 			.post("/Login/LogOutLog", logOut)
@@ -40,14 +33,6 @@ export default function HomePage() {
 
 		navigate("/");
 	};
-
-	// const AddVendor = () => {
-	// 	navigate("/AddVendor");
-	// };
-
-	// const ListVendor = () => {
-	// 	navigate("/ListVendor");
-	// };
 
 	return (
 		<>

@@ -1,20 +1,21 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import Breadcrumb from '../Redux/reducer/Constants/Breadcrumb'
 import Header from '../Redux/reducer/Constants/Header'
 import { deleteCart } from '../Redux/actions/productActions';
+import { useNavigate } from 'react-router-dom';
 
 
 const Cart = () => {
     const products = useSelector((state) => state.handleCart);
-    // const { title, description, price, category, image } = products;
-    // const [productRate, setProductRate] = useState();
     const dispatch = useDispatch();
-    console.log(products);
+    const navigate = useNavigate();
+    const token = localStorage.getItem("LoginToken");
 
-    // const deleteProduct = (product) => {
-    //     dispatch(deleteCart(product));
-    // };
+    useEffect(() => {
+        if (!token) navigate("/");
+        document.title = "HomePage";
+    }, []);
 
     const handleDeleteButton = (products) => {
         dispatch(deleteCart(products));
@@ -40,7 +41,7 @@ const Cart = () => {
                                     </p>
                                 </div>
                                 <div>
-                                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                         +
                                     </button></div>
                                 <div className="px-6 pt-4 pb-2">
@@ -53,7 +54,7 @@ const Cart = () => {
                         </div>))
                 ) : (
                     <div id="main">
-                        <div class="fof">
+                        <div className="fof">
                             <h1>Ooops!! Cart is empty!</h1>
                         </div>
                     </div>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Breadcrumb from '../Redux/reducer/Constants/Breadcrumb'
 import Header from '../Redux/reducer/Constants/Header'
 import Avatar from "../Avtar.jpg"
@@ -6,6 +6,12 @@ import { useNavigate } from 'react-router-dom'
 
 const AboutUs = () => {
     const navigate = useNavigate();
+    const token = localStorage.getItem("LoginToken");
+
+    useEffect(() => {
+        if (!token) navigate("/");
+        document.title = "HomePage";
+    }, []);
     return (
         <>
             <Header />
