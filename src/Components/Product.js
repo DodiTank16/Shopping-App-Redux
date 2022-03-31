@@ -53,7 +53,7 @@ const Product = () => {
 					data.map((item) => (
 						<div key={item.id}>
 							<div className="rounded bg-white h-100">
-								<img className="w-full" src={item.image} alt={item.title} />
+								<img className="w-48 ml-12 " src={item.image} alt={item.title} />
 								<div className="px-6 py-4">
 									<div className="font-bold text-xl mb-2">{item.title}</div>
 									<p className="text-gray-700 text-base"><b>Price: </b>{item.price}$</p>

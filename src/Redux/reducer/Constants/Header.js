@@ -12,6 +12,8 @@ function Header() {
 	const dispatch = useDispatch();
 	const [showSearch, setShowSearch] = useState();
 	const [searchedValue, setSearchedValue] = useState("")
+	const cartProducts = useSelector((state) => state.handleCart);
+
 
 	const handleLogout = () => {
 		localStorage.removeItem("LoginToken");
@@ -88,7 +90,7 @@ function Header() {
 									>
 										<i className="fas fa fa-shopping-cart fa-lg"></i>
 										<span className="cart-basket d-flex align-items-center justify-content-center">
-											{0}
+											{cartProducts.length}
 										</span>
 									</Link>
 									{showSearch && <div className="flex justify-center ml-5">
@@ -99,7 +101,11 @@ function Header() {
 													placeholder="Search"
 													aria-label="Search"
 													aria-describedby="button-addon2"
-													onChange={(e) => { setSearchedValue(e.target.value); dispatch(searchProduct(products, searchedValue)) }}
+													onChange={(e) => {
+														setSearchedValue(e.target.value.trim());
+														console.log(searchedValue);
+														dispatch(searchProduct(products, searchedValue))
+													}}
 												/>
 												<button className="btn inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700  focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out flex items-center"
 													type="button"
@@ -124,7 +130,7 @@ function Header() {
 								</div>
 							</div>
 						</div>
-						<div className="-mr-2 flex md:hidden">
+						<div className="mr-2 flex md:hidden">
 							<button
 								onClick={() => setIsOpen(!isOpen)}
 								type="button"

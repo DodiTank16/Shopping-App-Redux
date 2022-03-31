@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Header from "../Redux/reducer/Constants/Header";
 import { addCart, setProducts } from "../Redux/actions/productActions";
 import Breadcrumb from "../Redux/reducer/Constants/Breadcrumb";
@@ -9,14 +9,18 @@ import Breadcrumb from "../Redux/reducer/Constants/Breadcrumb";
 const ProductDetails = () => {
 	const products = useSelector((state) => state.allProducts.products);
 	const [selectedItem, setSelectedItem] = useState("");
-	const { title, description, price, category, image } = selectedItem;
 	const [productRate, setProductRate] = useState();
-	const dispatch = useDispatch();
+	const { title, description, price, category, image } = selectedItem;
 	const { state } = useLocation();
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		state && fetchProducts();
 	}, [state]);
+
+	useEffect(() => {
+		fetchProducts();
+	}, []);
 
 	const fetchProducts = async () => {
 		const response = await axios
@@ -37,11 +41,9 @@ const ProductDetails = () => {
 			<Header />
 			<Breadcrumb />
 			<div className="p-10">
-				{/* <!--Card 1--> */}
 				<div className=" h-full w-full lg:max-w-full lg:flex bg-gray">
 					<div
 						className="h-100 lg:h-100 lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden border"
-						// style="background-image: url(`${image}`)"
 						title="Mountain"
 					>
 						<img src={image} alt={title} style={{ height: "4in" }} />
@@ -76,6 +78,7 @@ const ProductDetails = () => {
 						<button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
 							onClick={() => addToCart(products)}
 						>Add to Cart</button>
+
 					</div>
 				</div>
 			</div>

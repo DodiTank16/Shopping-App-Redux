@@ -19,7 +19,6 @@ export const productsReducer = (state = initialState, { type, payload }) => {
 
 export const handleCart = (state = cart, action) => {
 	const product = action.payload;
-	console.log(product);
 	switch (action.type) {
 		case ActionTypes.ADD_CART:
 			const exist = state.find((x) => x.id === product.id);

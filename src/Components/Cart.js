@@ -7,8 +7,8 @@ import { deleteCart } from '../Redux/actions/productActions';
 
 const Cart = () => {
     const products = useSelector((state) => state.handleCart);
-    const { title, description, price, category, image } = products;
-    const [productRate, setProductRate] = useState();
+    // const { title, description, price, category, image } = products;
+    // const [productRate, setProductRate] = useState();
     const dispatch = useDispatch();
     console.log(products);
 

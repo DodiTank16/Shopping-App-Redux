@@ -32,7 +32,7 @@ const Breadcrumb = () => {
 							<ol className="inline-flex items-center space-x-1 md:space-x-3" key={index}> &gt;
 								<li className="inline-flex items-center">{capatilize(name)}</li></ol>
 						) : (
-							<ol className="inline-flex items-center space-x-1 md:space-x-3">&gt;
+							<ol className="inline-flex items-center space-x-1 md:space-x-3" key={index}>&gt;
 								<li className="inline-flex items-center">
 									<Link to={`${routeTo}`}>{capatilize(name)}</Link>
 								</li></ol>
