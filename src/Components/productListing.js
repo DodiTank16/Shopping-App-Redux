@@ -18,7 +18,7 @@ const ProductListing = () => {
 	useEffect(() => {
 
 		if (!token) navigate("/");
-		document.title = "HomePage";
+		document.title = "Product List";
 	}, []);
 
 	const fetchProducts = async () => {

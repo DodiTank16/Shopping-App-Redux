@@ -5,8 +5,6 @@ import { setProducts } from "../Redux/actions/productActions";
 
 const Product = () => {
 	const products = useSelector((state) => state.allProducts.filterItem);
-	const productData = useSelector((state) => state.allProducts.products);
-
 	const dispatch = useDispatch();
 	const [flag, setFlag] = React.useState();
 	const [data, setData] = React.useState([]);
@@ -15,19 +13,18 @@ const Product = () => {
 
 	useEffect(() => {
 
-		if (!token) navigate("/");
-		document.title = "HomePage";
+		if (!token) navigate("/Login");
+		document.title = "Products";
 	}, []);
 
 	useEffect(() => {
-		setData(productData)
-	}, [productData])
+		setData(products)
+	}, [products])
 
 
 	useEffect(() => {
 		setData(products)
 	}, [data, products])
-
 
 	const handleSort = (data) => {
 		const sortedData = data.sort((first, second) => {
@@ -44,14 +41,38 @@ const Product = () => {
 		dispatch(setProducts(sortedData));
 		setFlag(!flag);
 	};
+
+	const handleDefaultSort = (data) => {
+		const sortedData = data.sort((first, second) => {
+			var titleOfA = first.title.toUpperCase();
+			var titleOfB = second.title.toUpperCase();
+			if (titleOfA > titleOfB) {
+				return -1;
+			}
+			if (titleOfA < titleOfB) {
+				return 1;
+			}
+			return 0;
+		});
+		dispatch(setProducts(sortedData));
+		console.log(products)
+		setFlag(!flag);
+	};
+
 	return (
 		<>
-			<div className="float-right mr-5">
+			<div className="flex float-right mr-5">
 				<button
-					className="mt-3 bg-black hover:bg-white text-green-700 font-semibold hover:text-black py-2 px-4 rounded flex .content-end"
+					className="mt-3 mr-2 bg-black hover:bg-white text-green-700 font-semibold hover:text-black py-2 px-4 rounded flex .content-end"
 					onClick={() => handleSort(data)}
 				>
-					Sort
+					Sort A-Z
+				</button>
+				<button
+					className="mt-3 bg-black hover:bg-white text-green-700 font-semibold hover:text-black py-2 px-4 rounded flex .content-end"
+					onClick={() => handleDefaultSort(data)}
+				>
+					Sort Z-A
 				</button>
 			</div>
 			<div className="container p-10 h-50 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -70,7 +91,7 @@ const Product = () => {
 									<button
 										className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
 										onClick={() =>
-											navigate(`/ProductListing/ProductDetails/${item.id}`, {
+											navigate(`/ProductListing/${item.id}`, {
 												state: item.id,
 											})
 										}

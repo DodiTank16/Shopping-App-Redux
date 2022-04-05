@@ -6,6 +6,7 @@ export const setProducts = (products) => {
 		payload: products,
 	};
 };
+
 export const searchProduct = (products, search) => {
 	return {
 		type: ActionTypes.SEARCH_VALUES,

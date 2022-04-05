@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Transition } from "@headlessui/react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,6 +13,7 @@ function Header() {
 	const [showSearch, setShowSearch] = useState();
 	const [searchedValue, setSearchedValue] = useState("")
 	const cartProducts = useSelector((state) => state.handleCart);
+	// const ref = useRef;
 
 
 	const handleLogout = () => {
@@ -21,7 +22,6 @@ function Header() {
 
 	useEffect(() => {
 		location.pathname === "/ProductListing"
-			// || location.pathname === "/products/productsDetails" //*cart will come here 
 			? setShowSearch(true)
 			: setShowSearch(false);
 	}, [location.pathname]);
@@ -44,11 +44,11 @@ function Header() {
 						<div className="flex items-center">
 							<div className="flex-shrink-0">
 								<Link
-									className="flex items-center text-indigo-400 no-underline hover:no-underline font-bold text-2xl lg:text-4xl"
-									to="/HomePage"
+									className="flex items-center text-green-400 no-underline hover:underline font-bold text-2xl lg:text-4xl"
+									to="/"
 								>
 									Tank's
-									<span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500">
+									<span className="bg-clip-text ml-2 text-transparent bg-gradient-to-r hover:underline from-green-400 via-pink-500 to-purple-500">
 										Corporation
 									</span>
 								</Link>
@@ -102,7 +102,7 @@ function Header() {
 													aria-label="Search"
 													aria-describedby="button-addon2"
 													onChange={(e) => {
-														setSearchedValue(e.target.value.trim());
+														setSearchedValue(e.target.value).trim();
 														console.log(searchedValue);
 														dispatch(searchProduct(products, searchedValue))
 													}}
@@ -211,9 +211,18 @@ function Header() {
 								</Link>
 
 								<Link
+									className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+									to={"/Cart"}
+									onClick={handleLogout}
+								>
+									Cart({cartProducts.length})
+								</Link>
+
+
+								<Link
+									className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
 									to={"/"}
 									onClick={handleLogout}
-									className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
 								>
 									Logout
 								</Link>

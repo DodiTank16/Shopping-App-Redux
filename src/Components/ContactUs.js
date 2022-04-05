@@ -12,7 +12,7 @@ const ContactUs = () => {
     useEffect(() => {
 
         if (!token) navigate("/");
-        document.title = "HomePage";
+        document.title = "Contact Us";
     }, []);
     return (
         <>
