@@ -42,6 +42,7 @@ const ProductDetails = () => {
 
 	const addToCart = (product) => {
 		dispatch(addCart(product));
+		navigate("/cart");
 	};
 
 	return (

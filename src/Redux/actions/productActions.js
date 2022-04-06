@@ -8,10 +8,11 @@ export const setProducts = (products) => {
 };
 
 export const searchProduct = (products, search) => {
+	console.log(search === "" ? products : products.filter((item) => item.title.toLowerCase().includes(search.trimStart().toLowerCase())));
 	return {
 		type: ActionTypes.SEARCH_VALUES,
 		payload: {
-			products: search === "" ? products : products.filter((item) => item.title.toLowerCase().includes(search.toLowerCase()))
+			products: search === "" ? products : products.filter((item) => item.title.toLowerCase().includes(search.trimStart().toLowerCase()))
 		}
 	};
 };
@@ -36,3 +37,12 @@ export const deleteCart = (products) => {
 		payload: products
 	}
 }
+
+export const filterByCategory = (filterData, data) => {
+	return {
+		type: ActionTypes.FILTER_BY_CATEGORY,
+		payload: {
+			products: data.filter((item) => filterData.includes(item.category)),
+		},
+	};
+};

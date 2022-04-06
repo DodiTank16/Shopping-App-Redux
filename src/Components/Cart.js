@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import Breadcrumb from '../Redux/reducer/Constants/Breadcrumb'
 import Header from '../Redux/reducer/Constants/Header'
-import { deleteCart } from '../Redux/actions/productActions';
+import { addCart, deleteCart } from '../Redux/actions/productActions';
 import { useNavigate } from 'react-router-dom';
 import EmptyCart from "../Empty Cart.png"
 
@@ -18,37 +18,91 @@ const Cart = () => {
         document.title = "HomePage";
     }, []);
 
-    const handleDeleteButton = (products) => {
-        dispatch(deleteCart(products));
+    const handleAddButton = (product) => {
+        dispatch(addCart(product));
+    };
+
+    const handleDeleteButton = (product) => {
+        dispatch(deleteCart(product));
     };
 
     return (
         <>
             <Header />
             <Breadcrumb />
-            <div className='flex'>
+            <div className='container p-10 h-50 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4'>
                 {products && products.length ? (
                     products.map((item) => (
-                        <div className=" flex p-10">
-                            <div className="max-w-sm rounded  shadow-lg bg-white">
-                                <img className="w-50 ml-24" src={item.image} alt={item.title} />
-                                <div className="px-6 py-4">
-                                    <div className="font-bold text-xl mb-2">{item.title}</div>
+                        <>
+                            {/* <div className=" flex p-10 h-100 min-w-max overflow">
+                                <div className="max-w-sm rounded  shadow-lg bg-white">
+                                    <img className="w-50 ml-24" src={item.image} alt={item.title} />
+                                    <div className="px-6 py-4">
+                                        <div className="font-bold text-xl mb-2">{item.title}</div>
+                                        <p className="text-gray-700 text-base">
+                                            {item.description}
+                                        </p>
+                                        <p className="text-gray-700 text-basemt-5" style={{ fontWeight: "600", color: "rgba(191, 34, 34, 1)", fontSize: 30 }}>
+                                            Price: {item.price}$
+                                        </p>
+                                    </div>
+                                    <div className="px-6">
+                                        <button class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold px-3 py-1 rounded-full">
+                                            +
+                                        </button>
+                                        <button class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold px-3 py-1 rounded-full">
+                                            -
+                                        </button>
+                                    </div>
+                                    <div className="px-6 pt-4 pb-2">
+                                        <button className="inline-block bg-red-900 rounded-full py-2 px-4 text-sm font-semibold text-white mr-2 mb-2 ml-16"
+                                            onClick={() => handleDeleteButton(item)}>
+                                            Remove from Cart
+                                        </button>
+                                    </div>
+                                </div>
+                            </div> */}
+
+                            <div class="max-w-sm bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+                                <img class="p-8 rounded-t-lg max-h-60 w-3/5 block ml-auto mr-auto" src={item.image} alt={item.title} />
+                                <div class="px-5 pb-5">
+                                    <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{item.title}</h5>
+                                    <div class="flex items-center mt-2.5 mb-5">
+                                        <svg class="w-5 h-5 text-yellow-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                                        <span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">{item.rating.rate}</span>
+                                    </div>
                                     <p className="text-gray-700 text-base">
                                         {item.description}
                                     </p>
-                                    <p className="text-gray-700 text-basemt-5" style={{ fontWeight: "600", color: "rgba(191, 34, 34, 1)", fontSize: 30 }}>
-                                        Price: {item.price}$
-                                    </p>
-                                </div>
-                                <div className="px-6 pt-4 pb-2">
-                                    <button className="inline-block bg-red-900 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2"
+                                    <div className="flex px-1 mt-3 mb-3">
+                                        <span class="text-3xl mr-5 font-bold text-gray-900 dark:text-white">${item.price * item.qty}</span>
+                                        <button class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold px-3 py-1 mr-1 rounded-full"
+                                            onClick={() => handleAddButton(item)}
+                                        >
+                                            +
+                                        </button>
+                                        <input
+                                            type="text"
+                                            class="form-control block mr-1 w-16 px-3 py-1.5 text-base font-normal text-gray-700 bg-gray bg-clip-padding border border-solid border-indigo-500/100 rounded transition ease-in-out m-0
+                                                focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                            disabled
+                                            value={item.qty}
+
+                                        />
+                                        <button class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold px-3 py-1 rounded-full"
+                                            onClick={() => handleDeleteButton(item)}>
+                                            -
+                                        </button>
+                                    </div>
+                                    <button
+                                        class="text-white bg-blue-700 hover:bg-blue-800 ml-16 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                                         onClick={() => handleDeleteButton(item)}>
-                                        Delete
-                                    </button>
+                                        Delete</button>
+
                                 </div>
                             </div>
-                        </div>))
+                        </>
+                    ))
                 ) : (
                     <div className='flex justify-center items-center h-96 '>
                         {/* <div className='mt-5 ml-60 pl-60'> */}
@@ -67,7 +121,7 @@ const Cart = () => {
                     // </div>
                 )
                 }
-            </div >
+            </div>
         </>
     )
 }

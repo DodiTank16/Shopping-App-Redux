@@ -78,14 +78,15 @@ export default function ApiFetch(props) {
 					</div>
 					<div className="flex items-center justify-between">
 						<button
-							className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+							className="bg-black hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
 							type="submit"
+							style={{ background: "black" }}
 						>
 							Sign In
 						</button>
 					</div>
 				</form>
-				<p className="text-center text-gray-500 text-xs">
+				<p className="text-center text-gray-300 text-xs">
 					&copy;2022 Tank's Corp. All rights reserved.
 				</p>
 			</div>
